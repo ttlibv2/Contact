@@ -65,6 +65,17 @@
                       </select>
           </div>
         </div>
+		<div class="form-group col-md-3 col-sm-6">
+          <label class="col-form-label">
+                      Hình thức hỗ trợ: 
+                      <span class="required">(*)</span>
+                  </label>
+          <div class="form-wrap">
+            <select class="form-control" [ngClass]="{  'is-invalid': hinhThucHT?.errors?.required }" name="hinhThucHT" [(ngModel)]="contact.hinhThucHT" required #hinhThucHT="ngModel">
+                          <option *ngFor="let hinhThucHT of hinhThucHTs" [value]="hinhThucHT">{{hinhThucHT}}</option>
+                      </select>
+          </div>
+        </div>
         <div class="form-group col-md-3 col-sm-6">
           <label class="col-form-label">
                       Tình trạng: 
@@ -78,7 +89,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>   
 
   <div class="card clearfix-card">
     <div class="card-header">Thông tin Công Ty</div>
@@ -96,33 +107,37 @@
           </div>
           <div class="form-group" >
             <label class="col-form-label">
-                          Nội dung cần hỗ trợ: 
+                          Nội dung hỗ trợ: 
                           <span class="required">(*)</span>
                       </label>
             <div class="form-wrap">
               <input type="text" class="form-control"[ngClass]="{ 'is-invalid': noiDungHT?.errors?.required }" name="noiDungHT" [(ngModel)]="contact.noiDungHT" required #noiDungHT="ngModel" />
             </div>
           </div>
-          <div class="form-group" >
-            <label class="col-form-label">
-                          E-mail: 
-                      </label>
-            <div class="form-wrap">
-              <input type="email" class="form-control" name="email" [(ngModel)]="contact.email" #email="ngModel" />
-            </div>
-          </div>         
+          <div class="form-group">
+              <label class="col-form-label">
+                Số điện thoại:
+                <span class="required">(*)</span> 
+              </label>
+              <div class="form-wrap">
+                <input type="text" class="form-control" name="soDienThoai" [(ngModel)]="contact.soDienThoai" required [ngClass]="{ 'is-invalid': noiDungHT?.errors?.required }"/>
+              </div>
+            </div>     
+              
         </div>
         <div class="col-md-6 col-sm-6">   
-            <div class="form-group">
-                <label class="col-form-label">Số điện thoại liên hệ: </label>
+            <div class="form-group" >
+                <label class="col-form-label">
+                              E-mail: 
+                          </label>
                 <div class="form-wrap">
-                  <input type="text" class="form-control" name="soDienThoai" [(ngModel)]="contact.soDienThoai" />
+                  <input type="email" class="form-control" name="email" [(ngModel)]="contact.email" #email="ngModel" />
                 </div>
-              </div>      
+              </div>    
           <div class="form-group">
             <label class="col-form-label">Nội dung Copy: </label>
             <div class="form-wrap">
-              <textarea class="form-control" name="resultLog" [(ngModel)]="resultLog" readonly style="height: 128px;"></textarea>
+              <textarea class="form-control" name="resultLog" [(ngModel)]="resultLog" readonly style="height: 135px;"></textarea>
             </div>
           </div>
         </div>

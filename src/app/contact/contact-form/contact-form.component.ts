@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Form } from "@angular/forms";
-import { ContactService, Contact, tinhTrangXLs, kenhHoTros, caLamViecs, linhVucHTs, lineNoiBos } from "../share/index";
+import { ContactService, Contact, tinhTrangXLs, kenhHoTros, caLamViecs, linhVucHTs, lineNoiBos, hinhThucHTs } from "../share/index";
 
 @Component({
   selector: 'app-contact-form',
@@ -13,6 +13,7 @@ export class ContactFormComponent implements OnInit {
   kenhs: {value: string, text: string}[] = kenhHoTros;
   caLVs: string[] = caLamViecs;
   linhVucHTs: string[] = linhVucHTs;
+  hinhThucHTs: string[] = hinhThucHTs;
   tinhTrangs: string[] = tinhTrangXLs;
 
   public contact: Contact;
@@ -39,7 +40,8 @@ export class ContactFormComponent implements OnInit {
     this.contact.kenhHoTro = formValue.kenhHoTro;
     this.contact.lineNoiBo = formValue.lineNoiBo;
     this.contact.caLamViec = formValue.caLamViec;
-    this.contact.linhVucHT = formValue.linhVucHT;
+    this.contact.linhVucHT = formValue.linhVucHT; 
+	this.contact.hinhThucHT = formValue.hinhThucHT;
 
     // --- ma so thue
     this.contact.maSoThue = `${formValue.maSoThue}`;

@@ -5,6 +5,7 @@ export class Contact {
     public lineNoiBo: string;
     public caLamViec: string;
     public linhVucHT: string;
+	public hinhThucHT: string;
 
     public maSoThue: string;
     //public tenCongTy: string;
@@ -31,6 +32,7 @@ export class Contact {
        // this.tenCongTy = "";
         this.tinhTrangXL = "";
         this.linhVucHT = "";
+		//this.hinhThucHT = "";
     }
 
     getItemOption(items: { value: string, text: string }[], text: string){
@@ -46,16 +48,16 @@ export class Contact {
         log += `-${this.getItemOption(lineNoiBos, this.lineNoiBo)}`;
         log += `-${this.maSoThue}`;
         log += `-${this.ngayHT}`;
-        log += "\n\n---------------------\n\n";
+        log += "\n---------------------";
 
         // contact
         //log += "Tên công ty: " + this.tenCongTy;
-        log += "\nMã số thuế / Mã đơn vị: " + this.maSoThue;
+        log += "\nMST/MDV: " + this.maSoThue;
        // log += "\nTên khách hàng: " + this.tenKhachHang;
         log += "\nEmail: " + this.email;
-        log += "\nSố điện thoại liên hệ: " + this.soDienThoai;
-        log += "\nNội dung cần hỗ trợ: " + this.noiDungHT;
-        log += "\nTên nhân viên/CTV: " + this.lineNoiBo;
+        log += "\nSố điện thoại: " + this.soDienThoai;
+        log += "\nNội dung hỗ trợ: " + this.noiDungHT;
+       // log += "\nTên nhân viên/CTV: " + this.lineNoiBo;
 
         return log;
     }
@@ -110,4 +112,11 @@ export const lineNoiBos: { value: string, text: string }[] = [
     {"value": "NTNTRAM", "text": "Nguyễn Thị Ngọc Trầm"},
     {"value": "NTNTV", "text": "Nguyễn Nữ Tường Vi"},
     {"value": "NTTUYEN", "text": "Nguyễn Thị Thảo Uyên"},
+];
+
+export const hinhThucHTs: string[] = [
+	"Trực tổng đài : Nghe điện thoại",
+	"Voicemail (Gọi lại cuộc gọi nhỡ)",
+	"Teamviewer",
+	"Gọi điện thoại hỗ trợ KH",
 ];
