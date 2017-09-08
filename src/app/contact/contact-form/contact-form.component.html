@@ -1,4 +1,4 @@
-<form novalidate #contactForm="ngForm" (ngSubmit)="contactForm.valid && sendContact(contactForm)">
+<form novalidate #contactForm="ngForm" class="contact-form" (ngSubmit)="contactForm.valid && sendContact(contactForm)">
   <div class="card clearfix-card">
     <div class="card-header">Thông tin phòng</div>
     <div class="card-block">
@@ -36,9 +36,10 @@
         <div class="form-group col-md-3 col-sm-6">
           <label class="col-form-label">
                       Kênh hỗ trợ: 
+					  <span class="required">(*)</span>
                   </label>
           <div class="form-wrap">
-            <select class="form-control" name="kenhHoTro" [(ngModel)]="contact.kenhHoTro" #kenhHoTro="ngModel">
+            <select class="form-control" name="kenhHoTro" [(ngModel)]="contact.kenhHoTro" #kenhHoTro="ngModel" required [ngClass]="{  'is-invalid': kenhHoTro?.errors?.required }">
                           <option *ngFor="let kenh of kenhs" [value]="kenh.value">{{kenh.value}}: {{kenh.text}}</option>
                       </select>
           </div>
@@ -120,35 +121,34 @@
                 <span class="required">(*)</span> 
               </label>
               <div class="form-wrap">
-                <input type="text" class="form-control" name="soDienThoai" [(ngModel)]="contact.soDienThoai" required [ngClass]="{ 'is-invalid': noiDungHT?.errors?.required }"/>
+                <input type="text" class="form-control" name="soDienThoai" [(ngModel)]="contact.soDienThoai" required [ngClass]="{ 'is-invalid': soDienThoai?.errors?.required }" #soDienThoai="ngModel"/>
               </div>
             </div>     
-              
-        </div>
-        <div class="col-md-6 col-sm-6">   
-            <div class="form-group" >
+              <div class="form-group" >
                 <label class="col-form-label">
                               E-mail: 
                           </label>
                 <div class="form-wrap">
                   <input type="email" class="form-control" name="email" [(ngModel)]="contact.email" #email="ngModel" />
                 </div>
-              </div>    
+              </div>     
+        </div>
+        <div class="col-md-6 col-sm-6">              
           <div class="form-group">
             <label class="col-form-label">Nội dung Copy: </label>
             <div class="form-wrap">
-              <textarea class="form-control" name="resultLog" [(ngModel)]="resultLog" readonly style="height: 135px;"></textarea>
+              <textarea class="form-control" name="resultLog" [(ngModel)]="resultLog" readonly style="height: 246px;"></textarea>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="form-group row">
-    <div class="col-md-10">
-      <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Gửi</button>
-      <button class="btn btn-primary" type="button" (click)="resetForm()">Nhập Lại</button>
-      <a href="{{urlSheet}}" target="_blank">Link Google Sheet</a>
-    </div>
+  <div class="form-group row">  
+	<div class="col-md-10">
+		<button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid" >Gửi</button>		
+		<button class="btn btn-primary" type="button" [disabled]="contactForm.value.resultLog == ''" (click)="resetForm()">Nhập Lại</button>
+		<a href="{{urlSheet}}" target="_blank">Link Google Sheet</a>
+	  </div>  
   </div>  
 </form>

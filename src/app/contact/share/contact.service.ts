@@ -15,7 +15,7 @@ export class ContactService {
   sendContact(contact: Contact): Observable<Response> {
     this.response = null;
     let body = JSON.stringify(contact);
-    //console.log("Thong Tin Gui: "+body);
+    console.log("Data Send: "+body);
     return this.http.post(this.pathSendContact, body);
   }
 

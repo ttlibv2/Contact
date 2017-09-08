@@ -9,8 +9,8 @@ import { ContactService, Contact, tinhTrangXLs, kenhHoTros, caLamViecs, linhVucH
 })
 
 export class ContactFormComponent implements OnInit {
-  lines: {value: string, text: string}[] = lineNoiBos;
-  kenhs: {value: string, text: string}[] = kenhHoTros;
+  lines: { value: string, text: string }[] = lineNoiBos;
+  kenhs: { value: string, text: string }[] = kenhHoTros;
   caLVs: string[] = caLamViecs;
   linhVucHTs: string[] = linhVucHTs;
   hinhThucHTs: string[] = hinhThucHTs;
@@ -22,7 +22,8 @@ export class ContactFormComponent implements OnInit {
   public urlSheet: string = "";
 
 
-  constructor( @Inject('contactSrv') private contactSrv: ContactService) { }
+  constructor( @Inject('contactSrv') private contactSrv: ContactService) {
+   }
 
   ngOnInit() {
     this.contact = new Contact();
@@ -30,21 +31,22 @@ export class ContactFormComponent implements OnInit {
   }
 
   sendContact(form): void {
-    //console.log(form);
+    console.log(form);
 
     let formValue = form.value;
 
     // -- phong ban
+    // check ngay ht
     this.contact.ngayHT = formValue.ngayHT;
     this.contact.phongBan = formValue.phongBan;
     this.contact.kenhHoTro = formValue.kenhHoTro;
     this.contact.lineNoiBo = formValue.lineNoiBo;
     this.contact.caLamViec = formValue.caLamViec;
-    this.contact.linhVucHT = formValue.linhVucHT; 
-	this.contact.hinhThucHT = formValue.hinhThucHT;
+    this.contact.linhVucHT = formValue.linhVucHT;
+    this.contact.hinhThucHT = formValue.hinhThucHT;
 
     // --- ma so thue
-    this.contact.maSoThue = `${formValue.maSoThue}`;
+    this.contact.maSoThue = formValue.maSoThue;
     //this.contact.tenCongTy = formValue.tenCongTy;
     //this.contact.tenKhachHang = formValue.tenKhachHang;
     this.contact.email = formValue.email;
@@ -57,7 +59,7 @@ export class ContactFormComponent implements OnInit {
     this.contactSrv.sendContact(this.contact).subscribe(res => {
       console.log(`<== Send Result Log: ${res.status} ==>`);
       let obj = res.json();
-      if(res.status == 200){
+      if (res.status == 200) {
         console.log(`Header Data: ${JSON.stringify(obj.data.header)}`);
         console.log(`Data Response: ${JSON.stringify(obj.data.dataRow)}`);
       }

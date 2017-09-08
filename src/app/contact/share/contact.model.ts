@@ -1,5 +1,7 @@
+import { Input } from '@angular/core';
+
 export class Contact {
-    public ngayHT: string;
+    public ngayHT: Date;
     public phongBan: string;
     public kenhHoTro: string;
     public lineNoiBo: string;
@@ -16,7 +18,7 @@ export class Contact {
     public tinhTrangXL: string;
 
     constructor() {
-        this.ngayHT = new Date().toString();
+        this.ngayHT = new Date();
         this.phongBan = "HT";
         this.lineNoiBo = "";
         this.reset();
@@ -38,7 +40,7 @@ export class Contact {
     getItemOption(items: { value: string, text: string }[], text: string){
         return items.filter(item => item.text == text)[0].value;
     }
-
+	
     toString(): string {
         let log: string = "";
 

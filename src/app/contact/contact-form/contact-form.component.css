@@ -1,3 +1,13 @@
 span.required{color:red;}
 .clearfix-card{margin-bottom: 5px;}
 .row {padding-left: 5px; padding-right: 5px;}
+.pull-left {float: left !important;}
+.pull-right {float: right !important;}
+
+
+.contact-form {margin-top: 10px;}
+.contact-form .form-group {margin-bottom: 0rem; }
+.contact-form .form-control {padding: .4rem .3rem; border-radius: .0rem;}
+.contact-form select.form-control {height: 34.78px; }
+.contact-form .card-block {padding-bottom: 0.5rem; }
+.contact-form .card-header {padding: .35rem .4rem; }
