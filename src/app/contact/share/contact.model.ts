@@ -1,124 +1,126 @@
 import { Input } from '@angular/core';
 
-export class Contact {
-    public ngayHT: Date;
-    public phongBan: string;
-    public kenhHoTro: string;
-    public lineNoiBo: string;
-    public caLamViec: string;
-    public linhVucHT: string;
-	public hinhThucHT: string;
+export class ItemOption {
+    value?: string;
+    text?: string;
+    join?: boolean;    
 
+    constructor(value: string, text: string) {
+        this.value = value;
+        this.text = text;
+    }
+
+    toString(): string {
+        let s = '';
+        if(this.value != null && this.value.length != 0) s = this.value;
+        if(this.text != null && this.text.length != 0) {
+            if(s.length == 0) s = this.text;
+            else if(this.join == true) s += ' - '+this.text;
+        }
+
+        return s;
+    }
+}
+
+export class Contact {
+    public ngayHT: string;
+    public phongBan: string;
+    public kenhHoTro: ItemOption;
+    public lineNoiBo: ItemOption;
+    public caLamViec: ItemOption;
+    public linhVucHT: ItemOption;
+    public hinhThucHT: ItemOption;
     public maSoThue: string;
-    //public tenCongTy: string;
-    //public tenKhachHang: string;
     public email: string;
     public soDienThoai: string;
     public noiDungHT: string;
-    public tinhTrangXL: string;
+    public tinhTrangXL: ItemOption;
 
     constructor() {
-        this.ngayHT = new Date();
+        this.ngayHT = this.getNow();
         this.phongBan = "HT";
-        this.lineNoiBo = "";
         this.reset();
     }
 
+    getNow() {
+        let now = new Date();
+        let day = now.getDate();
+        let month = now.getUTCMonth() + 1;
+        let year = now.getFullYear().toString().substring(2, 4);
+
+        return `${year}${month < 10 ? `0${month}` : month}${day}`;
+    }
+
     reset(): void {
-        this.kenhHoTro = "";
+        this.kenhHoTro = null;
         this.maSoThue = "";
-      //  this.tenKhachHang = "";
         this.email = "";
         this.soDienThoai = "";
         this.noiDungHT = "";
-       // this.tenCongTy = "";
-        this.tinhTrangXL = "";
-        this.linhVucHT = "";
-		//this.hinhThucHT = "";
+        this.tinhTrangXL = null;
+        this.linhVucHT = null;
     }
 
-    getItemOption(items: { value: string, text: string }[], text: string){
+    getItemOption(items: { value: string, text: string }[], text: string) {
         return items.filter(item => item.text == text)[0].value;
     }
-	
+
     toString(): string {
         let log: string = "";
 
         // phong ban
-        //log += "// [Phòng ban]_[Kênh hỗ trợ]_[Line nội bộ]_[Mã số thuế/Mã đơn vị]_[yymmdd]";
-        log += `[${this.phongBan}-${this.kenhHoTro}]`;
-        log += `-${this.getItemOption(lineNoiBos, this.lineNoiBo)}`;
+        log += `[${this.phongBan}-${this.kenhHoTro.value}]`;
+        log += `-${this.lineNoiBo.value}`;
         log += `-${this.maSoThue}`;
         log += `-${this.ngayHT}`;
         log += "\n---------------------";
 
         // contact
-        //log += "Tên công ty: " + this.tenCongTy;
         log += "\nMST/MDV: " + this.maSoThue;
-       // log += "\nTên khách hàng: " + this.tenKhachHang;
         log += "\nEmail: " + this.email;
         log += "\nSố điện thoại: " + this.soDienThoai;
         log += "\nNội dung hỗ trợ: " + this.noiDungHT;
-       // log += "\nTên nhân viên/CTV: " + this.lineNoiBo;
 
         return log;
     }
 }
 
-export const caLamViecs: string[] = [
-    "Cả ngày",
-    "Ca sáng",
-    "Ca chiều",
-    "Ca Tối",
-    "Sáng Tối",
-    "Chiều Tối"
-];
+// export const caLamViecs: string[] = [
+//     "Cả ngày",
+//     "Ca sáng",
+//     "Ca chiều",
+//     "Ca Tối",
+//     "Sáng Tối",
+//     "Chiều Tối"
+// ];
 
-export const linhVucHTs: string[] = [
-    "iBHXH",
-    "TaxOnline và Pay24",
-    "iHQ",
-    "Chữ ký số",
-    "iThongKe",
-    "Hỗ trợ tận nơi",
-    "Khác"
-];
+// export const linhVucHTs: string[] = [
+//     "iBHXH",
+//     "TaxOnline và Pay24",
+//     "iHQ",
+//     "Chữ ký số",
+//     "iThongKe",
+//     "Hỗ trợ tận nơi",
+//     "Khác"
+// ];
 
-export const tinhTrangXLs: string[] = [
-    "Đã xử lý",
-    "Chưa xử lý",
-    "Gửi phòng Tester"
-];
+// export const tinhTrangXLs: string[] = [
+//     "Đã xử lý",
+//     "Chưa xử lý",
+//     "Gửi phòng Tester"
+// ];
 
-export const kenhHoTros: { value: string, text: string }[] = [
-    { "value": "PI", "text": "nhận điện thoại từ KH." },
-    { "value": "PO", "text": "gọi ra hỗ trợ KH." },
-    { "value": "E", "text": "email" },
-    { "value": "C", "text": "chat" },
-    { "value": "T", "text": "teamviewer" }
-];
+// export const kenhHoTros: { value: string, text: string }[] = [
+//     { "value": "PI", "text": "nhận điện thoại từ KH." },
+//     { "value": "PO", "text": "gọi ra hỗ trợ KH." },
+//     { "value": "E", "text": "email" },
+//     { "value": "C", "text": "chat" },
+//     { "value": "T", "text": "teamviewer" }
+// ];
 
-export const lineNoiBos: { value: string, text: string }[] = [
-    {"value": "LHMLOAN", "text": "Lê Huỳnh Mai Loan"},
-    {"value": "TQDUONG", "text": "Trần Quốc Dương"},
-    {"value": "NPTNHU", "text": "Nguyễn Phương Thảo Như"},
-    {"value": "NTTIN", "text": "Nguyễn Trung Tín"},
-    {"value": "NTMPHUONG", "text": "Nguyễn Thị Mỹ Phương"},
-    {"value": "TRHOAIAN", "text": "Trần Hoài An"},
-    {"value": "NHTANH", "text": "Nguyễn Hà Tuấn Anh"},
-    {"value": "NTMO", "text": "Nguyễn Thị Mơ"},
-    {"value": "MTTBINH", "text": "Mai Thị Thanh Bình"},
-    {"value": "HMBTOAN", "text": "Hà Minh Bảo Toàn"},
-    {"value": "PHTRANG", "text": "Phùng Thị Hiền Trang"},
-    {"value": "NTLE", "text": "Nguyễn Thị Lê"},
-    {"value": "NTNTRAM", "text": "Nguyễn Thị Ngọc Trầm"},
-    {"value": "NTNTV", "text": "Nguyễn Nữ Tường Vi"},
-    {"value": "NTTUYEN", "text": "Nguyễn Thị Thảo Uyên"},
-];
-
-export const hinhThucHTs: string[] = [
-	"Trực tổng đài : Nghe điện thoại",
-	"Voicemail (Gọi lại cuộc gọi nhỡ)",
-	"Teamviewer",
-	"Gọi điện thoại hỗ trợ KH",
-];
+// export const hinhThucHTs: string[] = [
+// 	"Trực tổng đài : Nghe điện thoại",
+// 	"Voicemail (Gọi lại cuộc gọi nhỡ)",
+// 	"Teamviewer",
+// 	"Gọi điện thoại hỗ trợ KH",
+// ];

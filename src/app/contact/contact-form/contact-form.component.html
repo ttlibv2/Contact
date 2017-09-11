@@ -18,7 +18,7 @@
                       <span class="required">(*)</span>
                   </label>
           <div class="form-wrap">
-            <input type="text" class="form-control"  [ngClass]="{ 'is-invalid': ngayHT?.errors?.required }" name="ngayHT" [ngModel]="contact.ngayHT|date:'yyMMdd'" required #ngayHT="ngModel"
+            <input type="text" class="form-control"  [ngClass]="{ 'is-invalid': ngayHT?.errors?.required }" name="ngayHT" [(ngModel)]="contact.ngayHT" required #ngayHT="ngModel"
             />
           </div>
         </div>
@@ -29,7 +29,7 @@
               </label>
           <div class="form-wrap">
               <select class="form-control"  [ngClass]="{  'is-invalid': lineNoiBo?.errors?.required }" name="lineNoiBo" [(ngModel)]="contact.lineNoiBo" required #lineNoiBo="ngModel">
-                  <option *ngFor="let line of lines" [value]="line.text">{{line.text}}</option>
+                  <option *ngFor="let line of lines" [ngValue]="line">{{line.text}}</option>
               </select>
           </div>
         </div>
@@ -40,7 +40,7 @@
                   </label>
           <div class="form-wrap">
             <select class="form-control" name="kenhHoTro" [(ngModel)]="contact.kenhHoTro" #kenhHoTro="ngModel" required [ngClass]="{  'is-invalid': kenhHoTro?.errors?.required }">
-                          <option *ngFor="let kenh of kenhs" [value]="kenh.value">{{kenh.value}}: {{kenh.text}}</option>
+                          <option *ngFor="let kenh of kenhs" [ngValue]="kenh">{{kenh.value}}: {{kenh.text}}</option>
                       </select>
           </div>
         </div>
@@ -51,7 +51,7 @@
                   </label>
           <div class="form-wrap">
             <select class="form-control" [ngClass]="{  'is-invalid': caLamViec?.errors?.required }" name="caLamViec" [(ngModel)]="contact.caLamViec" required #caLamViec="ngModel">
-                          <option *ngFor="let caLamViec of caLVs" [value]="caLamViec">{{caLamViec}}</option>
+                          <option *ngFor="let calv of caLVs" [ngValue]="calv">{{calv.value}}</option>
                       </select>
           </div>
         </div>
@@ -62,7 +62,7 @@
                   </label>
           <div class="form-wrap">
             <select class="form-control" [ngClass]="{  'is-invalid': linhVucHT?.errors?.required }" name="linhVucHT" [(ngModel)]="contact.linhVucHT" required #linhVucHT="ngModel">
-                          <option *ngFor="let linhVucHT of linhVucHTs" [value]="linhVucHT">{{linhVucHT}}</option>
+                          <option *ngFor="let linhVucHT of linhVucHTs" [ngValue]="linhVucHT">{{linhVucHT.value}}</option>
                       </select>
           </div>
         </div>
@@ -73,7 +73,7 @@
                   </label>
           <div class="form-wrap">
             <select class="form-control" [ngClass]="{  'is-invalid': hinhThucHT?.errors?.required }" name="hinhThucHT" [(ngModel)]="contact.hinhThucHT" required #hinhThucHT="ngModel">
-                          <option *ngFor="let hinhThucHT of hinhThucHTs" [value]="hinhThucHT">{{hinhThucHT}}</option>
+                          <option *ngFor="let hinhThucHT of hinhThucHTs" [ngValue]="hinhThucHT">{{hinhThucHT.value}}</option>
                       </select>
           </div>
         </div>
@@ -84,7 +84,7 @@
                   </label>
           <div class="form-wrap">
             <select class="form-control" [ngClass]="{  'is-invalid': tinhTrangXL?.errors?.required }" name="tinhTrangXL" [(ngModel)]="contact.tinhTrangXL" required #tinhTrangXL="ngModel">
-                          <option *ngFor="let tinhTrangXL of tinhTrangs" [value]="tinhTrangXL">{{tinhTrangXL}}</option>
+                          <option *ngFor="let tinhTrangXL of tinhTrangs" [ngValue]="tinhTrangXL">{{tinhTrangXL.value}}</option>
                       </select>
           </div>
         </div>
@@ -137,7 +137,7 @@
           <div class="form-group">
             <label class="col-form-label">Nội dung Copy: </label>
             <div class="form-wrap">
-              <textarea class="form-control" name="resultLog" [(ngModel)]="resultLog" readonly style="height: 246px;"></textarea>
+              <textarea class="form-control" name="resultLog" [(ngModel)]="resultLog" style="height: 246px;"></textarea>
             </div>
           </div>
         </div>
@@ -146,8 +146,8 @@
   </div>
   <div class="form-group row">  
 	<div class="col-md-10">
-		<button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid" >Gửi</button>		
-		<button class="btn btn-primary" type="button" [disabled]="contactForm.value.resultLog == ''" (click)="resetForm()">Nhập Lại</button>
+		<button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid || contactForm.value.resultLog != ''" >Gửi</button>		
+		<button class="btn btn-primary" type="button" [disabled]="contactForm.value.resultLog == ''" (click)="resetForm()" #btnReset>Nhập Lại</button>
 		<a href="{{urlSheet}}" target="_blank">Link Google Sheet</a>
 	  </div>  
   </div>  

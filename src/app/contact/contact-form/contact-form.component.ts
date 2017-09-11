@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Form } from "@angular/forms";
-import { ContactService, Contact, tinhTrangXLs, kenhHoTros, caLamViecs, linhVucHTs, lineNoiBos, hinhThucHTs } from "../share/index";
+import { ContactService, Contact, ItemOption } from "../share/index";
 
 @Component({
   selector: 'app-contact-form',
@@ -9,12 +9,12 @@ import { ContactService, Contact, tinhTrangXLs, kenhHoTros, caLamViecs, linhVucH
 })
 
 export class ContactFormComponent implements OnInit {
-  lines: { value: string, text: string }[] = lineNoiBos;
-  kenhs: { value: string, text: string }[] = kenhHoTros;
-  caLVs: string[] = caLamViecs;
-  linhVucHTs: string[] = linhVucHTs;
-  hinhThucHTs: string[] = hinhThucHTs;
-  tinhTrangs: string[] = tinhTrangXLs;
+  lines: ItemOption[] = null;
+  kenhs: ItemOption[] = null;
+  caLVs: ItemOption[] = null;
+  linhVucHTs: ItemOption[] = null;
+  hinhThucHTs: ItemOption[] = null;
+  tinhTrangs: ItemOption[] = null;
 
   public contact: Contact;
   public resultLog: string = "";
@@ -26,14 +26,25 @@ export class ContactFormComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.lines = this.contactSrv.getAllNhanVien();
+    this.kenhs = this.contactSrv.getAllKenhHoTro();
+    this.caLVs = this.contactSrv.getAllCaLamViec();
+    this.linhVucHTs = this.contactSrv.getAllLinhVucHT();
+    this.hinhThucHTs = this.contactSrv.getAllHinhThucHT();
+    this.tinhTrangs = this.contactSrv.getAllTinhTrang();
+
     this.contact = new Contact();
     this.urlSheet = this.contactSrv.urlSheet;
   }
+
+
 
   sendContact(form): void {
     console.log(form);
 
     let formValue = form.value;
+
+    console.log(formValue.kenhHoTro);
 
     // -- phong ban
     // check ngay ht
@@ -47,8 +58,6 @@ export class ContactFormComponent implements OnInit {
 
     // --- ma so thue
     this.contact.maSoThue = formValue.maSoThue;
-    //this.contact.tenCongTy = formValue.tenCongTy;
-    //this.contact.tenKhachHang = formValue.tenKhachHang;
     this.contact.email = formValue.email;
     this.contact.soDienThoai = formValue.soDienThoai;
     this.contact.noiDungHT = formValue.noiDungHT;
@@ -57,12 +66,9 @@ export class ContactFormComponent implements OnInit {
     // result
     this.resultLog = this.contact.toString();
     this.contactSrv.sendContact(this.contact).subscribe(res => {
-      console.log(`<== Send Result Log: ${res.status} ==>`);
-      let obj = res.json();
-      if (res.status == 200) {
-        console.log(`Header Data: ${JSON.stringify(obj.data.header)}`);
-        console.log(`Data Response: ${JSON.stringify(obj.data.dataRow)}`);
-      }
+      console.log(`==> Send Result Log: ${res.status} ==>`);
+      console.log(`[Status] ${res.status}`);
+      console.log(`[Data] ${JSON.stringify(res.json()['data'])}`);
     });
   }
 
@@ -70,5 +76,24 @@ export class ContactFormComponent implements OnInit {
     this.contact.reset();
     this.resultLog = "";
   }
+
+  toString(contact: Contact): string {
+    let log: string = "";
+
+    // phong ban
+    log += `[${contact.phongBan}-${contact.kenhHoTro.value}]`;
+    log += `-${contact.lineNoiBo.value}`;
+    log += `-${contact.maSoThue}`;
+    log += `-${contact.ngayHT}`;
+    log += "\n---------------------";
+
+    // contact
+    log += "\nMST/MDV: " + contact.maSoThue;
+    log += "\nEmail: " + contact.email;
+    log += "\nSố điện thoại: " + contact.soDienThoai;
+    log += "\nNội dung hỗ trợ: " + contact.noiDungHT;
+
+    return log;
+}
 
 }
