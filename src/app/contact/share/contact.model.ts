@@ -48,7 +48,7 @@ export class Contact {
         let month = now.getUTCMonth() + 1;
         let year = now.getFullYear().toString().substring(2, 4);
 
-        return `${year}${month < 10 ? `0${month}` : month}${day}`;
+        return `${year}${month < 10 ? `0${month}` : month}${day < 10? `0${day}`: day}`;
     }
 
     reset(): void {

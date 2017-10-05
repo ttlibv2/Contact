@@ -9,10 +9,11 @@ import { ItemOption } from "./contact.model";
 export class ContactService {
   private pathSendContact: string = "https://script.google.com/macros/s/AKfycbyoc1GyDlcA4G_YW47XfZtGDuV_8O0emqb8t0Iz3T-zivNVG4VD/exec";
   public urlSheet: string = "https://docs.google.com/spreadsheets/d/1_bS5dKc3uE5UdmIdaVN43NMsphyORwSqTM7d5v-vgCM/edit#gid=0";
+  readonly spreadsheetId = '1_bS5dKc3uE5UdmIdaVN43NMsphyORwSqTM7d5v-vgCM';
 
   constructor( @Inject('sheetV4') private sheetV4: SheetV4Service, private http: Http) {
     sheetV4.apiKey = 'AIzaSyDza1aPlPJWnItyzClvtKMeoDmI2Lix5l8';
-    sheetV4.spreadsheetId = '1_bS5dKc3uE5UdmIdaVN43NMsphyORwSqTM7d5v-vgCM';
+    //sheetV4.spreadsheetId = '1_bS5dKc3uE5UdmIdaVN43NMsphyORwSqTM7d5v-vgCM';
   }
 
   sendContact(contact: Contact): Observable<Response> {
@@ -23,35 +24,36 @@ export class ContactService {
 
   private getItemSelect(range: string): ItemOption[] {
     let data: ItemOption[] = [];
-    this.sheetV4.getValues(`DATA_DB!${range}`).subscribe(res => {
+    let request = { spreadsheetId: this.spreadsheetId, range: `DATA_DB!${range}` };
+    this.sheetV4.getValues(request).subscribe(res => {
       res.values.forEach((item, index) => {
-        data[index] = new ItemOption( item[0], item[1]);
+        data[index] = new ItemOption(item[0], item[1]);
       });
     });
     return data;
   }
 
-  getAllNhanVien(){
+  getAllNhanVien() {
     return this.getItemSelect('A2:B');
   }
 
-  getAllKenhHoTro(){
+  getAllKenhHoTro() {
     return this.getItemSelect('D2:E');
   }
 
-  getAllCaLamViec(){
+  getAllCaLamViec() {
     return this.getItemSelect('G2:H');
   }
 
-  getAllLinhVucHT(){
+  getAllLinhVucHT() {
     return this.getItemSelect('J2:K');
   }
 
-  getAllHinhThucHT(){
+  getAllHinhThucHT() {
     return this.getItemSelect('M2:N');
   }
 
-  getAllTinhTrang(){
+  getAllTinhTrang() {
     return this.getItemSelect('P2:Q');
   }
 
